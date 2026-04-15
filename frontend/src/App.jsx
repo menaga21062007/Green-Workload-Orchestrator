@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const BASE_URL = "https://green-backend.onrender.com";
+const BASE_URL = "https://green-workload-orchestrator.onrender.com";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -37,7 +37,9 @@ function App() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ name, type }),
-    }).then(() => setName(""));
+    })
+      .then(() => setName(""))
+      .catch(err => console.error(err));
   };
 
   return (
