@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const BASE_URL = "https://green-backend.onrender.com";
+
 function App() {
   const [tasks, setTasks] = useState([]);
   const [carbon, setCarbon] = useState(null);
@@ -10,15 +12,15 @@ function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch("http://127.0.0.1:8000/tasks")
+      fetch(`${BASE_URL}/tasks`)
         .then(res => res.json())
         .then(data => setTasks(data.tasks));
 
-      fetch("http://127.0.0.1:8000/carbon")
+      fetch(`${BASE_URL}/carbon`)
         .then(res => res.json())
         .then(data => setCarbon(data));
 
-      fetch("http://127.0.0.1:8000/savings")
+      fetch(`${BASE_URL}/savings`)
         .then(res => res.json())
         .then(data => setSavings(data.co2_saved));
     }, 3000);
@@ -29,7 +31,7 @@ function App() {
   const addTask = () => {
     if (!name) return;
 
-    fetch("http://127.0.0.1:8000/task", {
+    fetch(`${BASE_URL}/task`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,12 +43,10 @@ function App() {
   return (
     <div style={{ fontFamily: "Arial", padding: "20px" }}>
       
-      {/* HEADER */}
       <h1 style={{ textAlign: "center" }}>
         🌱 Green Workload Orchestrator
       </h1>
 
-      {/* CARDS */}
       <div style={{ display: "flex", justifyContent: "center", gap: "20px", marginTop: "20px" }}>
         
         <div style={{
@@ -80,7 +80,6 @@ function App() {
 
       </div>
 
-      {/* INPUT */}
       <div style={{ textAlign: "center", marginTop: "30px" }}>
         <input
           type="text"
@@ -115,7 +114,6 @@ function App() {
         </button>
       </div>
 
-      {/* TABLE */}
       <table
         style={{
           width: "80%",
