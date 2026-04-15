@@ -4,7 +4,7 @@ import random
 
 app = FastAPI()
 
-# ✅ CORS (important for Vercel)
+# ✅ Enable CORS (required for frontend)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -13,21 +13,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Data storage
+# ✅ In-memory storage
 tasks = []
 co2_saved = 0
 
-# Home
+# ✅ Home route
 @app.get("/")
 def home():
     return {"message": "Backend running"}
 
-# Get tasks
+# ✅ Get all tasks
 @app.get("/tasks")
 def get_tasks():
     return {"tasks": tasks}
 
-# 🔥 Dynamic carbon intensity
+# ✅ Dynamic carbon intensity (changes every call)
 @app.get("/carbon")
 def get_carbon():
     value = random.randint(100, 500)
@@ -44,12 +44,12 @@ def get_carbon():
         "status": status
     }
 
-# CO2 savings
+# ✅ CO2 savings
 @app.get("/savings")
 def get_savings():
     return {"co2_saved": co2_saved}
 
-# Add task
+# ✅ Add task
 @app.post("/task")
 def add_task(task: dict):
     global co2_saved
@@ -59,7 +59,7 @@ def add_task(task: dict):
 
     tasks.append(task)
 
-    # simulate saving
+    # simulate savings
     co2_saved += random.randint(1, 10)
 
     return {"message": "Task added"}
